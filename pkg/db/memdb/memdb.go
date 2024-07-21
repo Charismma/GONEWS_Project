@@ -6,17 +6,17 @@ type Store struct {
 }
 
 //Функция конструткор
-func New() *Store {
-	return new(Store)
+func New() (*Store, error) {
+	return new(Store), nil
 }
 
 //Вывод всех постов
-func Posts(n int) ([]db.Post, error) {
+func (s *Store) Posts(n int) ([]db.Post, error) {
 	return posts, nil
 }
 
 //Добавление постов
-func AddPosts([]db.Post) error {
+func (s *Store) AddPosts(posts []db.Post) error {
 	return nil
 }
 

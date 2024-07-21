@@ -24,7 +24,7 @@ func New(constr string) (*Storage, error) {
 }
 
 func (s *Storage) Posts(n int) ([]db.Post, error) {
-	rows, err := s.db.Query(context.Background(), `SELECT id,title,content,pubtime,link FROM posts ORDER BY pubtime
+	rows, err := s.db.Query(context.Background(), `SELECT id,title,content,pubtime,link FROM posts ORDER BY pubtime DESC
 	LIMIT $1`, n)
 	if err != nil {
 		return nil, err
@@ -50,8 +50,7 @@ func (s *Storage) Posts(n int) ([]db.Post, error) {
 
 func (s *Storage) AddPosts(posts []db.Post) error {
 	for _, post := range posts {
-		_, err := s.db.Exec(context.Background(), `INSERT INTO posts(id,title,content,pubtime,link) VALUES($1,$2,$3,$4,$5)`,
-			&post.ID,
+		_, err := s.db.Exec(context.Background(), `INSERT INTO posts(title,content,pubtime,link) VALUES($1,$2,$3,$4)`,
 			&post.Title,
 			&post.Content,
 			&post.PubTime,
