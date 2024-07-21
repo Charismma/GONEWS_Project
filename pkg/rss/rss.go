@@ -11,6 +11,7 @@ import (
 	strip "github.com/grokify/html-strip-tags-go"
 )
 
+// Xml-структура rss-ленты
 type Feed struct {
 	XMLName xml.Name `xml:"rss"`
 	Chanel  struct {
@@ -26,6 +27,7 @@ type Feed struct {
 	} `xml:"channel"`
 }
 
+// Парсинг rss-ленты
 func ParseRss(url string) ([]db.Post, error) {
 	resp, err := http.Get(url)
 	if err != nil {
@@ -47,7 +49,6 @@ func ParseRss(url string) ([]db.Post, error) {
 		post.Content = item.Description
 		post.Content = strip.StripTags(post.Content)
 		post.Link = item.Link
-		//<pubDate>Sat, 22 Jun 2024 16:29:50 GMT</pubDate>
 		item.PubDate = strings.ReplaceAll(item.PubDate, ",", "")
 		t, err := time.Parse("Mon 2 Jan 2006 15:04:05 -0700", item.PubDate)
 		if err != nil {

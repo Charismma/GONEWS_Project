@@ -72,6 +72,7 @@ func main() {
 	}
 }
 
+// Парсинг отдельной rss ленты
 func ParseUrls(url string, db *db.Interface, posts chan<- []db.Post, errors chan<- error, period int) {
 	log.Println("Внутри функции парсинга начало")
 	ticker := time.NewTicker(time.Minute * time.Duration(period))

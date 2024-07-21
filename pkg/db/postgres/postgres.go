@@ -23,6 +23,7 @@ func New(constr string) (*Storage, error) {
 	return &s, nil
 }
 
+// Вывод n постов
 func (s *Storage) Posts(n int) ([]db.Post, error) {
 	rows, err := s.db.Query(context.Background(), `SELECT id,title,content,pubtime,link FROM posts ORDER BY pubtime DESC
 	LIMIT $1`, n)
@@ -48,6 +49,7 @@ func (s *Storage) Posts(n int) ([]db.Post, error) {
 
 }
 
+// Добавление постов
 func (s *Storage) AddPosts(posts []db.Post) error {
 	for _, post := range posts {
 		_, err := s.db.Exec(context.Background(), `INSERT INTO posts(title,content,pubtime,link) VALUES($1,$2,$3,$4)`,

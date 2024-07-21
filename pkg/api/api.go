@@ -14,6 +14,7 @@ type API struct {
 	router *mux.Router
 }
 
+// Конструктор API
 func New(db db.Interface) *API {
 	api := API{
 		db: db,
@@ -32,6 +33,7 @@ func (api *API) Router() *mux.Router {
 	return api.router
 }
 
+// Обработчик Get-запроса на получение новостей
 func (api *API) postsHandler(w http.ResponseWriter, r *http.Request) {
 	s := mux.Vars(r)["n"]
 	n, err := strconv.Atoi(s)
